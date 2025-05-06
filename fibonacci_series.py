@@ -1,18 +1,35 @@
-def fibonacci_series(n):
+def fibonacci_series_reliable(n):
+    """
+    Generates a Fibonacci series up to n terms.
+    Starts the series with the first '1'.
+    """
+    if n <= 0:
+        return []  # Return an empty list for non-positive n
+        
     series = []
-    a, b = 0, 1  # First two numbers in the series
+    a, b = 0, 1  # a represents F(k-2), b represents F(k-1)
+                # We append b, so the series starts with F(1) if F(0)=0, F(1)=1
     
     for _ in range(n):
-        series.append(b)  # Append the current number
-        a, b = b, a + b   # Update values of a and b
+        series.append(b)
+        a, b = b, a + b
     
     return series
 
-n_terms = int(input("Enter the number of terms: "))
+if __name__ == "__main__":
+    while True:
+        try:
+            n_terms_str = input("Enter the number of terms: ")
+            n_terms = int(n_terms_str)
+            if n_terms < 0: # Allow 0 terms to mean an empty series
+                 print("Please enter a non-negative integer.")
+            else:
+                break 
+        except ValueError:
+            print("Invalid input. Please enter a whole number.")
 
-if n_terms <= 0:
-    print("Please enter a positive integer.")
-
-else:
-    print("Fibonacci series:")
-    print(fibonacci_series(n_terms))
+    if n_terms == 0:
+        print("Fibonacci series: []")
+    else:
+        print("Fibonacci series:")
+        print(fibonacci_series_reliable(n_terms))
